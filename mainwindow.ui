@@ -84,7 +84,7 @@
          <string notr="true">background: transparent;</string>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>3</number>
         </property>
         <widget class="QWidget" name="homePage">
          <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -853,8 +853,8 @@ QScrollBar::sub-page, QScrollBar::add-page{
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>954</width>
-                  <height>655</height>
+                  <width>64</width>
+                  <height>60</height>
                  </rect>
                 </property>
                 <property name="sizePolicy">
@@ -945,6 +945,734 @@ hr { height: 1px; border-width: 0; }
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <item>
+              <widget class="QTabWidget" name="settingTab">
+               <property name="styleSheet">
+                <string notr="true">QTabWidget::pane{
+	border: none;
+}
+QTabBar::tab{
+	background-color: rgb(21, 34, 47);
+	border-radius: 5px;
+	width:  150px;
+	font-size: 24px;
+	height: 40px;
+}
+QTabBar::tab:selected, QTabBar::tab:hover{
+	font-size: 28px;
+	color: rgba(43, 162, 238,150);
+}
+QTabBar::close-button{
+    
+	border-image: url(:/images/close.svg);
+}</string>
+               </property>
+               <property name="currentIndex">
+                <number>0</number>
+               </property>
+               <widget class="QWidget" name="basicSetting">
+                <attribute name="title">
+                 <string>基本设置</string>
+                </attribute>
+                <layout class="QVBoxLayout" name="verticalLayout_2">
+                 <property name="spacing">
+                  <number>20</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>25</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="musicSettingLabel">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>微软雅黑</family>
+                     <pointsize>16</pointsize>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>音乐设置</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="musicSwitch">
+                   <property name="font">
+                    <font>
+                     <family>微软雅黑</family>
+                     <pointsize>10</pointsize>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>开启音乐播放</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="volLabel">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>微软雅黑</family>
+                     <pointsize>10</pointsize>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>音量大小</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QWidget" name="widget_3" native="true">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_7">
+                    <item>
+                     <widget class="QSpinBox" name="volBox">
+                      <property name="maximum">
+                       <number>100</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QSlider" name="volSlider">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">height: 20px;
+width: 200px;</string>
+                      </property>
+                      <property name="maximum">
+                       <number>100</number>
+                      </property>
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="horizontalSpacer_6">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="musicPathLabel">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>微软雅黑</family>
+                     <pointsize>10</pointsize>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>音乐路径</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="musicPath">
+                   <property name="minimumSize">
+                    <size>
+                     <width>300</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>300</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">border: 3px solid white;
+border-radius: 5px;</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="pathModify">
+                   <property name="minimumSize">
+                    <size>
+                     <width>100</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>100</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>微软雅黑</family>
+                     <pointsize>10</pointsize>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">background: white;
+border-radius: 3px;
+color: rgb(83, 83, 83)</string>
+                   </property>
+                   <property name="text">
+                    <string>更改目录</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="timeSettingLabel">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>微软雅黑</family>
+                     <pointsize>16</pointsize>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">margin-top: 25px;</string>
+                   </property>
+                   <property name="text">
+                    <string>时间设置</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="timeSwitch">
+                   <property name="font">
+                    <font>
+                     <family>微软雅黑</family>
+                     <pointsize>10</pointsize>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>开启时间显示</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="timeBox">
+                   <property name="minimumSize">
+                    <size>
+                     <width>200</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>200</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QComboBox{
+	background-color: transparent;
+	width: 150px;
+	color: rgb(47, 137, 255);
+	border-radius: 15px;
+}
+QComboBox::drop-down{
+	background: transparent;
+}
+QComboBox::down-arrow{
+	border-image: url(:/images/drop-down.svg);
+	width: 20px;
+	height: 20px;
+	margin-right: 10px;
+}
+QComboBox QAbstractItemView{
+	border: 1px solid yellow;
+	border-radius:5px;
+	color: rgb(117, 154, 255);
+}
+QComboBox QAbstractItemView::item{
+color: white;
+font-size: 9px;
+}</string>
+                   </property>
+                   <item>
+                    <property name="text">
+                     <string>hh:mm</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>hh:mm:ss</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>yyyy/MM/dd hh:mm</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="quesSetting">
+                <attribute name="title">
+                 <string>题目设置</string>
+                </attribute>
+                <layout class="QVBoxLayout" name="verticalLayout_6">
+                 <property name="spacing">
+                  <number>20</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>25</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QPushButton" name="quesAdd">
+                   <property name="minimumSize">
+                    <size>
+                     <width>180</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>180</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton{
+	border: 1px solid white;
+	background-color: rgb(160, 255, 198);
+	border-radius: 15px;
+	color: rgb(71, 71, 71);
+	font-size: 24px;
+}	
+QPushButton::hover{
+ 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #273c75, stop:1 #487eb0);
+}
+QPushButton::pressed{
+    color: #FFFFFF;
+    background: transparent;
+	font-size: 20px;
+}</string>
+                   </property>
+                   <property name="text">
+                    <string>添加题目</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="quesModify">
+                   <property name="minimumSize">
+                    <size>
+                     <width>180</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>180</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton{
+	border: 1px solid white;
+	background-color: rgb(160, 255, 198);
+	border-radius: 15px;
+	color: rgb(71, 71, 71);
+	font-size: 24px;
+}	
+QPushButton::hover{
+ 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #273c75, stop:1 #487eb0);
+}
+QPushButton::pressed{
+    color: #FFFFFF;
+    background: transparent;
+	font-size: 20px;
+}</string>
+                   </property>
+                   <property name="text">
+                    <string>修改题目</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="quesDelete">
+                   <property name="minimumSize">
+                    <size>
+                     <width>180</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>180</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton{
+	border: 1px solid white;
+	background-color: rgb(160, 255, 198);
+	border-radius: 15px;
+	color: rgb(71, 71, 71);
+	font-size: 24px;
+}	
+QPushButton::hover{
+ 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #273c75, stop:1 #487eb0);
+}
+QPushButton::pressed{
+    color: #FFFFFF;
+    background: transparent;
+	font-size: 20px;
+}</string>
+                   </property>
+                   <property name="text">
+                    <string>删除题目</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer_3">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="taskSetting">
+                <attribute name="title">
+                 <string>任务设置</string>
+                </attribute>
+                <layout class="QVBoxLayout" name="verticalLayout_7">
+                 <property name="spacing">
+                  <number>20</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>25</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QPushButton" name="taskAdd">
+                   <property name="minimumSize">
+                    <size>
+                     <width>180</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>180</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton{
+	border: 1px solid white;
+	background-color: rgb(160, 255, 198);
+	border-radius: 15px;
+	color: rgb(71, 71, 71);
+	font-size: 24px;
+}	
+QPushButton::hover{
+ 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #273c75, stop:1 #487eb0);
+}
+QPushButton::pressed{
+    color: #FFFFFF;
+    background: transparent;
+	font-size: 20px;
+}</string>
+                   </property>
+                   <property name="text">
+                    <string>添加任务</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="taskModify">
+                   <property name="minimumSize">
+                    <size>
+                     <width>180</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>180</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton{
+	border: 1px solid white;
+	background-color: rgb(160, 255, 198);
+	border-radius: 15px;
+	color: rgb(71, 71, 71);
+	font-size: 24px;
+}	
+QPushButton::hover{
+ 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #273c75, stop:1 #487eb0);
+}
+QPushButton::pressed{
+    color: #FFFFFF;
+    background: transparent;
+	font-size: 20px;
+}</string>
+                   </property>
+                   <property name="text">
+                    <string>修改任务</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="taskDelete">
+                   <property name="minimumSize">
+                    <size>
+                     <width>180</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>180</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton{
+	border: 1px solid white;
+	background-color: rgb(160, 255, 198);
+	border-radius: 15px;
+	color: rgb(71, 71, 71);
+	font-size: 24px;
+}	
+QPushButton::hover{
+ 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #273c75, stop:1 #487eb0);
+}
+QPushButton::pressed{
+    color: #FFFFFF;
+    background: transparent;
+	font-size: 20px;
+}</string>
+                   </property>
+                   <property name="text">
+                    <string>删除任务</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer_4">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>450</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="secureSetting">
+                <attribute name="title">
+                 <string>安全设置</string>
+                </attribute>
+                <layout class="QVBoxLayout" name="verticalLayout_8">
+                 <property name="spacing">
+                  <number>20</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>25</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QPushButton" name="passwdModify">
+                   <property name="minimumSize">
+                    <size>
+                     <width>180</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>180</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton{
+	border: 1px solid white;
+	background-color: rgb(160, 255, 198);
+	border-radius: 15px;
+	color: rgb(71, 71, 71);
+	font-size: 24px;
+}	
+QPushButton::hover{
+ 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #273c75, stop:1 #487eb0);
+}
+QPushButton::pressed{
+    color: #FFFFFF;
+    background: transparent;
+	font-size: 20px;
+}</string>
+                   </property>
+                   <property name="text">
+                    <string>修改密码</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="userDelete">
+                   <property name="minimumSize">
+                    <size>
+                     <width>180</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>180</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton{
+	border: 1px solid white;
+	background-color: rgb(160, 255, 198);
+	border-radius: 15px;
+	color: rgb(71, 71, 71);
+	font-size: 24px;
+}	
+QPushButton::hover{
+ 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #273c75, stop:1 #487eb0);
+}
+QPushButton::pressed{
+    color: #FFFFFF;
+    background: transparent;
+	font-size: 20px;
+}</string>
+                   </property>
+                   <property name="text">
+                    <string>删除账户</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer_5">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>520</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </widget>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
          </layout>
@@ -1171,6 +1899,29 @@ background-color:  transparent;
           <number>0</number>
          </property>
          <item>
+          <spacer name="horizontalSpacer_7">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="musicBtn">
+           <property name="styleSheet">
+            <string notr="true">background: transparent;</string>
+           </property>
+           <property name="text">
+            <string>PushButton</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <spacer name="horizontalSpacer_3">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -1229,6 +1980,23 @@ border-image: url(:/images/close.svg);</string>
           </widget>
          </item>
         </layout>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="timeLabel">
+        <property name="font">
+         <font>
+          <family>微软雅黑</family>
+          <pointsize>12</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>21:03</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
        </widget>
       </item>
      </layout>

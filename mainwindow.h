@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include <QMouseEvent>
+#include <QMediaPlayer>
+#include <QTimer>
 
 
 #include "myframe.h"
@@ -25,17 +27,27 @@ public:
     void initList();
     void initTaskBox();
     void initTask(QString str);
+    void loadSetting();
     void setList(int num);
+    void setMusic();
+    void setTime();
     int getNumber(int num);
+    void saveSetting();
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
 
     QPoint point;
     Ui::MainWindow *ui;
+    QMediaPlayer player;
+    QStringList list;
+    int tot, currentIndex;
+    QString musicPath;
+    QTimer timer;
 
 private slots:
     void on_minBtn_clicked();
     void on_closeBtn_clicked();
+    void on_pathModify_clicked();
 
 
 

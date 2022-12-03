@@ -3,6 +3,9 @@
 #include <QFile>
 #include <QTextStream>
 #include <QDebug>
+#include <QTime>
+#include <QFileDialog>
+#include <QDir>
 
 extern QString username;
 extern MainWindow *mainwindow;
@@ -15,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     setAttribute(Qt::WA_TranslucentBackground);//设置背景透明
     setWindowFlags(Qt::FramelessWindowHint);//无边框
+    //初始化
     this->init();
     // 连接 menu 跳转 与 List 更新
     connect(ui->menu, &QListWidget::currentRowChanged, [&](int index){
@@ -39,6 +43,9 @@ MainWindow::MainWindow(QWidget *parent) :
     });
     // 任务显示
     connect(ui->taskBox, &QComboBox::currentTextChanged, this, &MainWindow::initTask);
+    // connect box 和 slider
+    connect(ui->volBox, QOverload<int>::of(&QSpinBox::valueChanged), ui->volSlider, &QSlider::setValue);
+    connect(ui->volSlider, &QSlider::valueChanged, ui->volBox, &QSpinBox::setValue);
 }
 
 MainWindow::~MainWindow()
@@ -48,6 +55,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::init()
 {
+    this->loadSetting();
     srand(time(0));
     this->initRandom();
     // 清空默认页面
@@ -137,10 +145,35 @@ void MainWindow::initTask(QString str)
     for(int i = 0; i < tot; ++i)
     {
         int row = i / 3, col = i % 3;
-        qDebug() << list.at(i).toInt() << row << col;
         ui->quesLayout->addWidget(new MyFrame(ui->taskArea, list.at(i).toInt()), row, col, 1, 1, Qt::AlignCenter);
     }
     file.close();
+}
+
+void MainWindow::loadSetting()
+{
+    QFile file("./users/setting.txt");
+    if(!file.open(QIODevice::ReadOnly)) perror("loadSetting wrong");
+    if(QString(file.readLine()).trimmed() == "true") ui->musicSwitch->setChecked(true);
+    else ui->musicSwitch->setChecked(false);
+    int vol = file.readLine().toInt();
+    ui->volBox->setValue(vol);
+    ui->volSlider->setValue(vol);
+    ui->musicPath->setText(QString(file.readLine()).trimmed());
+    if(QString(file.readLine()).trimmed() == "true") ui->musicSwitch->setChecked(true);
+    else ui->musicSwitch->setChecked(false);
+    ui->timeBox->setCurrentText(QString(file.readLine()).trimmed());
+
+    // 设置音乐 时间
+    timer.setInterval(1000);
+    // connect
+    connect(&timer, &QTimer::timeout, [&](){
+        ui->timeLabel->setText(QDateTime::currentDateTime().toString(ui->timeBox->currentText()));
+    });
+    connect(ui->timeSwitch, &QCheckBox::stateChanged, this, &MainWindow::setTime);
+    connect(ui->musicSwitch, &QCheckBox::stateChanged, this, &MainWindow::setMusic);
+    this->setTime();
+    this->setMusic();
 }
 
 void MainWindow::setList(int num)
@@ -151,6 +184,35 @@ void MainWindow::setList(int num)
     item->setData(Qt::UserRole, num);
     ui->listWidget->addItem(item);
     file.close();
+}
+
+void MainWindow::setMusic()
+{
+    if(ui->musicSwitch->checkState() == Qt::Checked)
+    {
+        musicPath = ui->musicPath->text();
+        QDir dir(musicPath);
+        QStringList nameFilters;
+        nameFilters << "*.mp3" << "*.m4a";
+        list = dir.entryList(nameFilters, QDir::Files | QDir::Readable, QDir::Name);
+        qDebug() << list.count() << musicPath << list.at(0);
+        qDebug() << player.state();
+        this->currentIndex = 0;
+        player.setMedia(QUrl::fromLocalFile(musicPath + "/" + list.at(0)));
+        player.play();
+    }
+    else player.stop();
+
+}
+
+void MainWindow::setTime()
+{
+    if(ui->timeSwitch->checkState() == Qt::Checked)
+    {
+        timer.start();
+        ui->timeLabel->show();
+    }
+    else timer.stop(), ui->timeLabel->hide();
 }
 
 int MainWindow::getNumber(int num)
@@ -191,6 +253,12 @@ void MainWindow::on_minBtn_clicked()
 void MainWindow::on_closeBtn_clicked()
 {
     this->close();
+}
+
+void MainWindow::on_pathModify_clicked()
+{
+    musicPath = QFileDialog::getExistingDirectory(this, "选择音乐目录", ui->musicPath->text());
+    ui->musicPath->setText(musicPath);
 }
 
 void MyFrame::mousePressEvent(QMouseEvent *event)

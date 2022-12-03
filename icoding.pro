@@ -11,20 +11,21 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     login.cpp \
-    music.cpp \
+    mainwindow.cpp \
     myframe.cpp \
     mywidget.cpp \
     users.cpp
 
 HEADERS += \
     login.h \
-    music.h \
+    mainwindow.h \
     myframe.h \
     mywidget.h \
     users.h
 
 FORMS += \
     login.ui \
+    mainwindow.ui \
     myframe.ui \
     mywidget.ui
 

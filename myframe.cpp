@@ -14,7 +14,7 @@ MyFrame::MyFrame(QWidget *parent, int quesnum)
     ui->setupUi(this);
     // 防止变样
     this->setMaximumSize(350, 300);
-    this->setMinimumHeight(200);
+    this->setMinimumSize(250, 200);
     setQuestion(id);
 }
 

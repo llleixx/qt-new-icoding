@@ -38,6 +38,8 @@ public:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void closeEvent(QCloseEvent *event);
+    void keyPressEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
 
     QPoint point;
     Ui::MainWindow *ui;
@@ -46,11 +48,21 @@ public:
     QStringList list;
     QString musicPath;
     QTimer timer;
+    bool alt, space, left, right;
 
 private slots:
     void on_minBtn_clicked();
     void on_closeBtn_clicked();
     void on_pathModify_clicked();
+    void on_musicCheck_clicked();
+    void on_quesAdd_clicked();
+    void on_quesModify_clicked();
+    void on_quesDelete_clicked();
+    void on_taskAdd_clicked();
+    void on_taskModify_clicked();
+    void on_taskDelete_clicked();
+    void on_passwdModify_clicked();
+    void on_userDelete_clicked();
 
 
 

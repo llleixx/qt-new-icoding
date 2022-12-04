@@ -55,12 +55,6 @@ private slots:
     void on_closeBtn_clicked();
     void on_pathModify_clicked();
     void on_musicCheck_clicked();
-    void on_quesAdd_clicked();
-    void on_quesModify_clicked();
-    void on_quesDelete_clicked();
-    void on_taskAdd_clicked();
-    void on_taskModify_clicked();
-    void on_taskDelete_clicked();
     void on_passwdModify_clicked();
     void on_userDelete_clicked();
 

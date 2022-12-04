@@ -36,3 +36,22 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     images.qrc
+
+DISTFILES += \
+    images/1.png \
+    images/2.png \
+    images/3.png \
+    images/4.png \
+    images/about.png \
+    images/bookmark.svg \
+    images/close.png \
+    images/close.svg \
+    images/drop-down.png \
+    images/drop-down.svg \
+    images/home.svg \
+    images/list.svg \
+    images/max.png \
+    images/min.png \
+    images/min.svg \
+    images/search.png \
+    images/setting.svg

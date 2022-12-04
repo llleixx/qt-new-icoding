@@ -41,6 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
     });
     // 页面变化，刷新 题单按钮和分数
     connect(ui->tabWidget, &QTabWidget::currentChanged, [&](){
+        if(ui->tabWidget->count())
         (static_cast<MyWidget *>(ui->tabWidget->currentWidget()))->myUpdate();
     });
     // 任务显示
@@ -75,7 +76,7 @@ void MainWindow::init()
 void MainWindow::initRandom()
 {
     QFile file("./questions/data.txt");
-    if(!file.open(QIODevice::ReadOnly)) perror("randomInit wrong");
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) perror("randomInit wrong");
     int tot = file.readLine().toInt(), num;
     MyFrame* frame[9] = {ui->question1, ui->question2, ui->question3, ui->question4, ui->question5, \
                        ui->question6, ui->question7, ui->question8, ui->question9};
@@ -93,7 +94,7 @@ void MainWindow::initList()
 {
     ui->listWidget->clear();
     QFile file("./users/" + username + ".txt");
-    if(!file.open(QIODevice::ReadOnly)) perror("initList wrong");
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) perror("initList wrong");
     file.readLine();
     int num, tot;
     QTextStream stream(&file);
@@ -109,7 +110,7 @@ void MainWindow::initList()
 void MainWindow::initTaskBox()
 {
     QFile file("./questions/data.txt");
-    if(!file.open(QIODevice::ReadOnly)) perror("initTask wrong");
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) perror("initTask wrong");
     file.readLine(); file.readLine();
     while(!file.atEnd())
     {
@@ -133,7 +134,7 @@ void MainWindow::initTask(QString str)
         delete child;
     }
     QFile file("./questions/data.txt");
-    if(!file.open(QIODevice::ReadOnly)) perror("initTask wrong");
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) perror("initTask wrong");
     file.readLine(); file.readLine();
     while(!file.atEnd())
     {
@@ -176,7 +177,7 @@ void MainWindow::loadSetting()
     });
 
     QFile file("./users/setting.txt");
-    if(!file.open(QIODevice::ReadOnly)) perror("loadSetting wrong");
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) perror("loadSetting wrong");
     if(QString(file.readLine()).trimmed() == "true") ui->musicSwitch->setChecked(true);
     else ui->musicSwitch->setChecked(false);
     int vol = file.readLine().toInt();
@@ -223,7 +224,7 @@ void MainWindow::loadSetting()
 void MainWindow::setList(int num)
 {
     QFile file("./questions/" + QString::number(num) + "/info.txt");
-    if(!file.open(QIODevice::ReadOnly)) perror("setList wrong");
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) perror("setList wrong");
     QListWidgetItem *item = new QListWidgetItem(QString::number(num) + ". " + QString(file.readLine()).trimmed(), ui->listWidget);
     item->setData(Qt::UserRole, num);
     ui->listWidget->addItem(item);
@@ -268,7 +269,7 @@ void MainWindow::setTime()
 int MainWindow::getNumber(int num)
 {
     QFile file("./questions/data.txt");
-    if(!file.open(QIODevice::ReadOnly)) perror("getNumber Wrong");
+    if(!file.open(QIODevice::ReadOnly  | QIODevice::Text)) perror("getNumber Wrong");
     int id;
     QTextStream stream(&file);
     stream.readLine();
@@ -280,7 +281,7 @@ int MainWindow::getNumber(int num)
 void MainWindow::saveSetting()
 {
     QFile file("./users/setting.txt");
-    if(!file.open(QIODevice::ReadOnly)) perror("saveSettging wrong");
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) perror("saveSettging wrong");
     QString str;
     if(ui->musicSwitch->checkState() == Qt::Checked) str.append("true\n");
     else str.append("false\n");
@@ -405,51 +406,64 @@ void MainWindow::on_musicCheck_clicked()
     dialog.exec();
 }
 
-void MainWindow::on_quesAdd_clicked()
-{
-//    QFile info("./questions/info/quesAdd.txt");
-//    if(!info.open(QIODevice::ReadOnly)) perror("on_quesAdd_clicked wrong");
-//    QMessageBox::StandardButton btn = QMessageBox::information(this, "添加题目", QString(info.readAll()), QMessageBox::Ok | QMessageBox::Cancel);
-//    info.close();
-//    if(btn != QMessageBox::Ok) return;
-
-//    QString quesPath = QFileDialog::getExistingDirectory(this, "选择题目目录");
-//    QFile
-}
-
-void MainWindow::on_quesModify_clicked()
-{
-
-}
-
-void MainWindow::on_quesDelete_clicked()
-{
-
-}
-
-void MainWindow::on_taskAdd_clicked()
-{
-
-}
-
-void MainWindow::on_taskModify_clicked()
-{
-
-}
-
-void MainWindow::on_taskDelete_clicked()
-{
-
-}
 
 void MainWindow::on_passwdModify_clicked()
 {
+    QMessageBox::StandardButton btn =  QMessageBox::warning(this, "警告", "您将修改您的密码", QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+    if(btn == QMessageBox::No) return;
 
+    bool ok;
+    QString str;
+    str = QInputDialog::getText(this, "您将修改您的密码", "请输入您的旧密码", QLineEdit::Password, "", &ok);
+    if(ok)
+    {
+        QFile file("./users/" + username + ".txt");
+        if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) perror("on_userDelete_clicked wrong");
+        QString passwd(file.readLine().trimmed());
+        qDebug() << passwd << str;
+        if(passwd == str)
+        {
+            str = QInputDialog::getText(this, "您将修改您的密码", "请输入您的新密码", QLineEdit::Password, "", &ok);
+            str = str + "\n";
+            str += QString(file.readAll());
+            file.close();
+            if(!file.open(QIODevice::WriteOnly |QIODevice::Truncate| QIODevice::Text)) perror("on_passwdModify_clicked");
+            file.write(str.toLatin1());
+        }
+        else
+        {
+            file.close();
+            QMessageBox::information(this, "错误", "密码错误", QMessageBox::Ok);
+        }
+    }
 }
 
 void MainWindow::on_userDelete_clicked()
 {
+    QMessageBox::StandardButton btn =  QMessageBox::warning(this, "警告", "确定删除该用户？", QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+    if(btn == QMessageBox::No) return;
 
+    bool ok;
+    QString str;
+    str = QInputDialog::getText(this, "您将删除您的账户", "请输入您的密码", QLineEdit::Password, "", &ok, Qt::WindowFlags(), \
+                         Qt::ImhPreferUppercase | Qt::ImhPreferLowercase | Qt::ImhPreferNumbers);
+    if(ok)
+    {
+        QFile file("./users/" + username + ".txt");
+        if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) perror("on_userDelete_clicked wrong");
+        QString passwd(file.readLine().trimmed());
+        if(passwd == str)
+        {
+            file.close();
+            file.remove();
+            this->close();
+        }
+        else
+        {
+            file.close();
+            QMessageBox::information(this, "删除账户失败", "密码错误", QMessageBox::Ok);
+        }
+    }
 }
 
 void MyFrame::mousePressEvent(QMouseEvent *event)

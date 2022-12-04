@@ -20,12 +20,19 @@ class Login : public QWidget
 public:
     Login(QWidget *parent = nullptr);
     ~Login();
-    QPoint winP;
+
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
+    void myRegister(QString username, QString passwd);
+
+    QPoint winP;
+
 private slots:
     void on_closeBtn_clicked();
-    int on_loginBtn_clicked();
+    void on_loginBtn_clicked();
+    void on_minBtn_clicked();
+    void on_aboutBtn_clicked();
+    void on_registerBtn_clicked();
 private:
     Ui::Login *ui;
 };

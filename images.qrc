@@ -1,20 +1,17 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/close.png</file>
-        <file>images/max.png</file>
-        <file>images/min.png</file>
-        <file>images/search.png</file>
         <file>images/bookmark.svg</file>
         <file>images/home.svg</file>
         <file>images/list.svg</file>
         <file>images/setting.svg</file>
-        <file>images/close.svg</file>
         <file>images/min.svg</file>
         <file>images/drop-down.svg</file>
-        <file>images/1.png</file>
-        <file>images/2.png</file>
-        <file>images/3.png</file>
-        <file>images/4.png</file>
-        <file>images/drop-down.png</file>
+        <file>images/about.svg</file>
+        <file>images/1.svg</file>
+        <file>images/2.svg</file>
+        <file>images/3.svg</file>
+        <file>images/4.svg</file>
+        <file>images/close.svg</file>
+        <file>images/search.svg</file>
     </qresource>
 </RCC>

@@ -43,9 +43,17 @@ MainWindow::MainWindow(QWidget *parent) :
     });
     // 任务显示
     connect(ui->taskBox, &QComboBox::currentTextChanged, this, &MainWindow::initTask);
-    // connect box 和 slider
+
     connect(ui->volBox, QOverload<int>::of(&QSpinBox::valueChanged), ui->volSlider, &QSlider::setValue);
     connect(ui->volSlider, &QSlider::valueChanged, ui->volBox, &QSpinBox::setValue);
+    // connect tabwidget关闭
+    connect(ui->tabWidget, &QTabWidget::tabCloseRequested, [&](int index){
+        QWidget *widget = ui->tabWidget->widget(index);
+        ui->tabWidget->removeTab(index);
+        delete(widget);
+    });
+
+
 }
 
 MainWindow::~MainWindow()
@@ -160,18 +168,37 @@ void MainWindow::loadSetting()
     ui->volBox->setValue(vol);
     ui->volSlider->setValue(vol);
     ui->musicPath->setText(QString(file.readLine()).trimmed());
-    if(QString(file.readLine()).trimmed() == "true") ui->musicSwitch->setChecked(true);
-    else ui->musicSwitch->setChecked(false);
+    if(QString(file.readLine()).trimmed() == "true") ui->timeSwitch->setChecked(true);
+    else ui->timeSwitch->setChecked(false);
     ui->timeBox->setCurrentText(QString(file.readLine()).trimmed());
 
-    // 设置音乐 时间
+    // 设置音乐与时间
     timer.setInterval(1000);
-    // connect
+    // connect 时间显示
     connect(&timer, &QTimer::timeout, [&](){
         ui->timeLabel->setText(QDateTime::currentDateTime().toString(ui->timeBox->currentText()));
     });
+    // connect box 和 slider player
+    connect(ui->volSlider, &QSlider::valueChanged, [&](int vol){
+        player.setVolume(vol);
+    });
+    // connect 开关
     connect(ui->timeSwitch, &QCheckBox::stateChanged, this, &MainWindow::setTime);
     connect(ui->musicSwitch, &QCheckBox::stateChanged, this, &MainWindow::setMusic);
+    // connect 音乐暂停
+    connect(ui->musicBtn, &QPushButton::clicked, [&](){
+        if(player.state() == QMediaPlayer::PausedState) player.play();
+        else player.pause();
+    });
+    // connecy 音乐名称显示
+    connect(&playList, &QMediaPlaylist::currentIndexChanged, [&](int index){
+       ui->musicBtn->setText(list.at(index));
+    });
+    // connect 路径变化
+    connect(ui->musicPath, &QLineEdit::editingFinished, [&](){
+       this->setMusic();
+    });
+    // 初始化
     this->setTime();
     this->setMusic();
 }
@@ -190,18 +217,24 @@ void MainWindow::setMusic()
 {
     if(ui->musicSwitch->checkState() == Qt::Checked)
     {
+        playList.clear();
         musicPath = ui->musicPath->text();
         QDir dir(musicPath);
         QStringList nameFilters;
         nameFilters << "*.mp3" << "*.m4a";
         list = dir.entryList(nameFilters, QDir::Files | QDir::Readable, QDir::Name);
-        qDebug() << list.count() << musicPath << list.at(0);
-        qDebug() << player.state();
-        this->currentIndex = 0;
-        player.setMedia(QUrl::fromLocalFile(musicPath + "/" + list.at(0)));
+        for(int i = 0; i < list.count(); ++i)
+            playList.addMedia(QUrl::fromLocalFile(musicPath + "/" + list.at(i)));
+        player.setPlaylist(&playList);
         player.play();
+        if(list.count())
+        {
+            ui->musicBtn->setText(list.at(0));
+        }
+        else ui->musicBtn->setText("该目录下未检测到音乐");
+        ui->musicBtn->show();
     }
-    else player.stop();
+    else player.stop(), ui->musicBtn->hide();
 
 }
 
@@ -227,6 +260,23 @@ int MainWindow::getNumber(int num)
     return id;
 }
 
+void MainWindow::saveSetting()
+{
+    QFile file("./users/setting.txt");
+    if(!file.open(QIODevice::ReadOnly)) perror("saveSettging wrong");
+    QString str;
+    if(ui->musicSwitch->checkState() == Qt::Checked) str.append("true\n");
+    else str.append("false\n");
+    str.append(QString::number(ui->volBox->value()) + "\n");
+    str.append(ui->musicPath->text() + "\n");
+    if(ui->timeSwitch->checkState() == Qt::Checked) str.append("true\n");
+    else str.append("false\n");
+    str.append(ui->timeBox->currentText());
+    file.close();
+    if(!file.open(QIODevice::WriteOnly |QIODevice::Truncate| QIODevice::Text)) perror("saveSetting wrong");
+    file.write(str.toUtf8().data()); // 可以存 utf8 的中文
+}
+
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
     if(event->y() < ui->topBar->height())
@@ -245,6 +295,12 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
     return QWidget::mouseMoveEvent(event);
 }
 
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    this->saveSetting();
+    return QWidget::closeEvent(event);
+}
+
 void MainWindow::on_minBtn_clicked()
 {
     this->showMinimized();
@@ -258,7 +314,11 @@ void MainWindow::on_closeBtn_clicked()
 void MainWindow::on_pathModify_clicked()
 {
     musicPath = QFileDialog::getExistingDirectory(this, "选择音乐目录", ui->musicPath->text());
-    ui->musicPath->setText(musicPath);
+    if(musicPath != "")
+    {
+        ui->musicPath->setText(musicPath);
+        this->setMusic();
+    }
 }
 
 void MyFrame::mousePressEvent(QMouseEvent *event)

@@ -5,6 +5,8 @@
 #include <QMouseEvent>
 #include <QMediaPlayer>
 #include <QTimer>
+#include <QMediaPlaylist>
+#include <QCloseEvent>
 
 
 #include "myframe.h"
@@ -35,12 +37,13 @@ public:
     void saveSetting();
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
+    void closeEvent(QCloseEvent *event);
 
     QPoint point;
     Ui::MainWindow *ui;
     QMediaPlayer player;
+    QMediaPlaylist playList;
     QStringList list;
-    int tot, currentIndex;
     QString musicPath;
     QTimer timer;
 
